@@ -1,9 +1,0 @@
-language: php
-rvm:
-  - 8.2
-  - 8.3
-  - 8.4
-  - 8.5
-
-install:
-  - composer install --no-interaction

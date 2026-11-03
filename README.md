@@ -12,7 +12,7 @@ This library contains a PHP client for AWS Cognito user pools.
 Requirements
 ------------
 
-This library package requires PHP 7.1 or later
+This library package requires PHP 8.2 or later (tested up to PHP 8.5)
 
 Installation
 ------------

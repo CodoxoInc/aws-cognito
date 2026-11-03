@@ -35,13 +35,13 @@ class CognitoClientTest extends TestCase
         $this->faker = Factory::create();
 
         $this->cognitoIdentityProviderClientMock = $this
-            ->getMockBuilder(CognitoIdentityProviderClient::class)
-            ->addMethods([
+            ->getMockBuilder(CognitoIdentityProviderClientTestDouble::class)
+            ->onlyMethods([
                 'adminInitiateAuth',
                 'respondToAuthChallenge',
             ])
             ->disableOriginalConstructor()
-            ->getMockForAbstractClass()
+            ->getMock()
         ;
 
         $this->cognitoClient = new CognitoClient($this->cognitoIdentityProviderClientMock);
@@ -177,5 +177,21 @@ class CognitoClientTest extends TestCase
         );
 
         return base64_encode($hash);
+    }
+}
+
+/**
+ * CognitoIdentityProviderClient's operations (e.g. adminInitiateAuth) are magic methods
+ * provided via AwsClient::__call(), so PHPUnit can't stub them on the SDK class directly.
+ * This test double declares them as real methods so they can be mocked with onlyMethods().
+ */
+class CognitoIdentityProviderClientTestDouble extends CognitoIdentityProviderClient
+{
+    public function adminInitiateAuth(array $args = [])
+    {
+    }
+
+    public function respondToAuthChallenge(array $args = [])
+    {
     }
 }
